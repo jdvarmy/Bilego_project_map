@@ -9,6 +9,7 @@ import { thankYouStore } from './stores/ThankYouStore'
 import { dataStore } from './stores/DataStore'
 import ThankYou from './AppLayout/ThankYou/ThankYou';
 import Error from './AppLayout/Error/Error';
+import WarInformer from "./AppLayout/WarInformer/WarInformer";
 
 import './chooser.css'
 
@@ -24,9 +25,10 @@ class AppIndex extends React.Component{
                 dataStore={dataStore}
             >
                 <Fragment>
-                    <AppLayout />
-                    <ThankYou />
-                    <Error />
+                    {/*<AppLayout />*/}
+                    {/*<ThankYou />*/}
+                    {/*<Error />*/}
+                    <WarInformer />
                 </Fragment>
             </Provider>
         );
