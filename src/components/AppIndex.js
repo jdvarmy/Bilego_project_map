@@ -25,10 +25,10 @@ class AppIndex extends React.Component{
                 dataStore={dataStore}
             >
                 <Fragment>
-                    {/*<AppLayout />*/}
-                    {/*<ThankYou />*/}
-                    {/*<Error />*/}
-                    <WarInformer />
+                    <AppLayout />
+                    <ThankYou />
+                    <Error />
+                    {/*<WarInformer />*/}
                 </Fragment>
             </Provider>
         );

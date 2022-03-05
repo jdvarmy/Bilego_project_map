@@ -33,11 +33,11 @@ class Map extends React.PureComponent{
       let countTickets = tickets.filter( ({end_date_time, start_date_time, stock})=>{
           let checkDate = true,
               newDate = new Date(),
-              start = new Date(...start_date_time.replace(/UTC/g, "-").replace(/:/g, "-").split('-')),
-              end = new Date(...end_date_time.replace(/UTC/g, "-").replace(/:/g, "-").split('-'));
+              start = start_date_time ? new Date(...start_date_time.replace(/UTC/g, "-").replace(/:/g, "-").split('-')) : null,
+              end = end_date_time ? new Date(...end_date_time.replace(/UTC/g, "-").replace(/:/g, "-").split('-')) : null;
 
-          start = start.setMonth(start.getMonth() - 1);
-          end = end.setMonth(end.getMonth() - 1);
+          start = start ? start.setMonth(start.getMonth() - 1) : null;
+          end = end ? end.setMonth(end.getMonth() - 1) : null;
 
           if(start_date_time && end_date_time){
               checkDate = start < newDate && end > newDate;

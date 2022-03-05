@@ -10,6 +10,7 @@ import { getStrEnding } from '../functions/functions';
 import { Drawer, Spin } from 'antd';
 import FondyGate from '../Checkout/FondyGate';
 import Spinner from '../Spinner';
+import TinkoffGate from '../Checkout/TinkoffGate';
 
 const Wrapper = styled(Drawer)`
     color: ${$css.colors.black};
@@ -129,7 +130,7 @@ class Cart extends React.Component{
                           spinning={isLoading}
                           size="large"
                         >
-                            {checkoutData && <FondyGate />}
+                            {checkoutData && <TinkoffGate />}
                         </SpinnerWrap>
                     </Container>
                 </Wrapper>

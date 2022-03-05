@@ -45,7 +45,6 @@ export function getCheckout( request ) {
             body: JSON.stringify( {'form': request, 'id': id} )
         };
 
-        // let address = `https://evenpic.ru/wp-json/bilego/v1/checkout`;
         return fetch(address, options)
             .then( resp => resp.json() )
             .then( resp => resp )

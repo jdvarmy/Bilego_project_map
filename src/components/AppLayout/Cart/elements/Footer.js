@@ -78,7 +78,7 @@ class Footer extends React.Component{
         });
 
         const request = {
-            'payment_method': 'fondy',
+            'payment_method': 'tinkoff',
             'set_paid': true,
             'billing': {
                 'email': email
