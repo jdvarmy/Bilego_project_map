@@ -96,7 +96,6 @@ class Footer extends React.Component{
             <Wrapper>
                 <TotalOrderWrap>
                     <TotalOrder>{total}</TotalOrder>
-                    <Meta>Вход в клуб по QR-коду</Meta>
                     <Meta>Нажимая кнопку «перейти к оплате», <Link href={href} target="_blank">вы соглашаетесь с условиями оферты</Link></Meta>
                 </TotalOrderWrap>
                 <Right isSmallScreen={isSmallScreen}>
