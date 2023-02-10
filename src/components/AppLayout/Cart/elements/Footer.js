@@ -71,7 +71,8 @@ const PromoMeta = styled('div')`
 @observer
 class Footer extends React.Component{
     close = () => {
-        const { cartStore:{ clear } } = this.props;
+        const { cartStore:{ clear }, serverDataStore:{ clearCouponData } } = this.props;
+        clearCouponData();
         clear();
     };
 
@@ -140,7 +141,7 @@ class Footer extends React.Component{
                       loading={isLoading}
                       placeholder="Промокод"
                       onSearch={this.promoHandler}
-                      onPressEnter={this.promoHandler}
+                      onPressEnter={(event) => this.promoHandler(event.target.value)}
                       value={couponValue}
                       onChange={(e) => setCouponValue(e.target?.value)}
                       enterButton={!!couponStatus ? 'Отменить' : 'Применить'}
