@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import { inject, observer } from 'mobx-react';
 import { $css, StyledButton } from '../../../styles/defaults';
 import Informer from '../../Informer/Informer';
+import { Input, Icon } from 'antd';
+import {couponStatusData} from "../../../stores/ServerDataStore";
+import {moneyFormating} from "../../functions/functions";
 
 const Wrapper = styled('div')`
     display: flex;
@@ -47,6 +50,22 @@ const Link = styled('a')`
 `;
 const Left = styled('div')`${p=>p.isSmallScreen && `margin-left: 15px;`}`;
 const Right = styled('div')`${p => p.isSmallScreen && `margin-right: 15px;`}`;
+const Promo = styled(Input.Search)`
+    width: 40%;
+    margin-bottom: 0.5rem;
+    & .ant-btn-primary {
+        background-color: ${$css.colors.red};
+        border-color: ${$css.colors.red};
+    }
+`;
+const PromoMeta = styled('div')`
+    clear: both;
+    font-size: 13px;
+    line-height: 13px;
+    text-align: right;
+    margin: 0.5rem auto;
+    ${props => props.color === 'success' ? `color: ${$css.colors.green}` : `color: ${$css.colors.red}`};
+`;
 
 @inject('cartStore', 'basketStore', 'serverDataStore', 'dataStore')
 @observer
@@ -67,8 +86,8 @@ class Footer extends React.Component{
         }
         showHidePay();
 
-        const { basketStore:{ ticketsMap }, serverDataStore:{ getCheckoutData }, cartStore:{ email } } = this.props;
-        let items = [];
+        const { basketStore:{ ticketsMap }, serverDataStore:{ getCheckoutData, coupon }, cartStore:{ email } } = this.props;
+        const items = [];
         ticketsMap.forEach(el=>{
             items.push({
                 product_id: el.id,
@@ -84,22 +103,53 @@ class Footer extends React.Component{
                 'email': email
             },
             'line_items': items,
+            coupon: coupon?.coupon,
         };
         getCheckoutData(request);
     };
 
+    promoHandler = (value) => {
+        const { basketStore:{ ticketsMap }, serverDataStore:{ getCouponData, clearCouponData, couponStatus } } = this.props;
+
+        if (couponStatus) {
+            clearCouponData()
+        } else {
+            const items = [];
+            ticketsMap.forEach(el=>{
+                items.push({
+                    product_id: el.id,
+                    quantity: el.count,
+                    variation_id: '',
+                });
+            });
+
+            getCouponData(value, items)
+        }
+    }
+
     render(){
-        const { cartStore:{ city, total }, dataStore: {isSmallScreen} } = this.props,
+        const { cartStore:{ city, total }, dataStore: { isSmallScreen }, serverDataStore: { coupon, isLoading, couponStatus, setCouponValue, couponValue } } = this.props,
             href = `https://bilego.ru/${city}/offer/`;
 
         return(
             <Wrapper>
                 <TotalOrderWrap>
-                    <TotalOrder>{total}</TotalOrder>
+                    {couponStatus && <PromoMeta color={couponStatus === couponStatusData.success ? 'success' : 'error'}>{couponStatus}</PromoMeta>}
+                    <Promo
+                      readOnly={!!couponStatus}
+                      loading={isLoading}
+                      placeholder="Промо код"
+                      onSearch={this.promoHandler}
+                      onPressEnter={this.promoHandler}
+                      value={couponValue}
+                      onChange={(e) => setCouponValue(e.target?.value)}
+                      enterButton={!!couponStatus ? <Icon type="close-circle" /> : <Icon type="tag" />}
+                    />
+                    <TotalOrder>{coupon ? moneyFormating(coupon?.total, true) : total}</TotalOrder>
                     <Meta>Нажимая кнопку «перейти к оплате», <Link href={href} target="_blank">вы соглашаетесь с условиями оферты</Link></Meta>
                 </TotalOrderWrap>
                 <Right isSmallScreen={isSmallScreen}>
-                    <Button type="primary" onClick={this.pay}>Перейти к оплате</Button>
+                    <Button disabled={isLoading} type="primary" onClick={this.pay}>Перейти к оплате</Button>
                 </Right>
                 <Left isSmallScreen={isSmallScreen}>
                     <Button type="default" onClick={this.close}>Назад</Button>

@@ -9,7 +9,6 @@ import { thankYouStore } from './stores/ThankYouStore'
 import { dataStore } from './stores/DataStore'
 import ThankYou from './AppLayout/ThankYou/ThankYou';
 import Error from './AppLayout/Error/Error';
-import WarInformer from "./AppLayout/WarInformer/WarInformer";
 
 import './chooser.css'
 

@@ -1,12 +1,13 @@
 import styled from 'styled-components';
-import { Button, Modal, Popover } from 'antd';
+import { Button, Modal } from 'antd';
 
 const baseDuration = 500;
 const baseDelay = 500;
 export const $css = {
     colors: {
-        red: '#f6255a', // red
+        red: '#f6255a',
         orange: '#ffae19',
+        green: '#07e260',
 
         grey: '#f7f7f7',
         darkGrey: '#676662',

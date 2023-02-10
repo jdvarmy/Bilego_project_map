@@ -8,7 +8,6 @@ import Footer from './elements/Footer'
 import { $css } from '../../styles/defaults';
 import { getStrEnding } from '../functions/functions';
 import { Drawer, Spin } from 'antd';
-import FondyGate from '../Checkout/FondyGate';
 import Spinner from '../Spinner';
 import TinkoffGate from '../Checkout/TinkoffGate';
 
@@ -88,13 +87,7 @@ class Cart extends React.Component{
           length = tickets ? tickets.length : 0;
 
         return(
-            <Wrapper
-                placement='left'
-                visible={showCart}
-                zIndex={100}
-                closable={false}
-                width={isSmallScreen ? '100%' : 476}
-            >
+            <Wrapper placement='left' visible={showCart} zIndex={100} closable={false} width={isSmallScreen ? '100%' : 476}>
                 <Container>
                     <Header>
                         <span>Подтверждение заказа</span>

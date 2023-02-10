@@ -288,6 +288,7 @@ class MapStore{
         const events = ['onclick', 'onmousedown', 'onmousemove', 'onmouseout', 'onmouseover',
             'onmouseup', 'ondblclick', 'onfocus', 'onblur'];
 
+        // eslint-disable-next-line array-callback-return
         events.map(event => {
             this.mapImage[event] = function() {
                 return false;

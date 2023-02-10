@@ -1,9 +1,17 @@
 import { observable, action } from 'mobx';
-import { getData, getCheckout } from '../../data/fetch';
+import {getData, getCheckout, sendCoupon} from '../../data/fetch';
+
+export const couponStatusData = {
+    overdue: 'Время действия этого купона истекло.',
+    success: 'Купон применен',
+}
 
 class ServerDataStore{
     @observable isLoading = false;
     @observable data = null;
+    @observable coupon = null;
+    @observable couponValue = '';
+    @observable couponStatus = null;
     @observable checkoutData = null;
     @observable loading = true;
     @observable loadingImage = 1;
@@ -32,24 +40,50 @@ class ServerDataStore{
     };
 
     @action
+    getCouponData = (coupon, tickets) => {
+        this.isLoading = true;
+        this.couponStatus = null;
+        sendCoupon({coupon, tickets}).then((data) => {
+            if( !data?.coupon ){
+                this.couponStatus = (data?.message?.includes('""') && data?.message.replace(/("")/gi, `"${this.couponValue}"`)) || couponStatusData.overdue
+            }else{
+                this.coupon = data;
+                this.couponStatus = couponStatusData.success
+            }
+
+            this.isLoading = false;
+        })
+    };
+    @action
+    setCouponValue = (value) => {
+        this.couponValue = value;
+    };
+    @action
+    clearCouponData = () => {
+        this.coupon = null;
+        this.couponValue = '';
+        this.couponStatus = null;
+    };
+
+    @action
     getCheckoutData = (data) => {
         this.isLoading = true;
         getCheckout(data).then( data => {
-            if( data ) {
-                if( data.code === 'error' ){
-                    this.isLoading = false;
-                    this.setError(data.message);
-                }else{
-                    this.isLoading = false;
-                    this.checkoutData = data;
-                }
+            if( data?.code === 'error' ){
+                this.setError(data.message);
+            }else{
+                this.checkoutData = data;
             }
+
+            this.isLoading = false;
         });
     };
 
     @action
     clean = () => {
         this.data = null;
+        this.coupon = null;
+        this.couponStatus = null;
         this.checkoutData = null;
         this.error = false;
 

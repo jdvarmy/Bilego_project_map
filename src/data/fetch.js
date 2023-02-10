@@ -28,6 +28,11 @@ export function getData() {
     }
 }
 
+const headers = {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+}
+
 export function getCheckout( request ) {
     const location = getEventId(true);
 
@@ -38,10 +43,7 @@ export function getCheckout( request ) {
 
         const options = {
             method: 'post',
-            headers:{
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
+            headers,
             body: JSON.stringify( {'form': request, 'id': id} )
         };
 
@@ -54,5 +56,28 @@ export function getCheckout( request ) {
         return new Promise(
           (resolve, reject) => setTimeout( ()=>resolve({code: 'error', message: 'Пусто!' }), 2000)
         )
+    }
+}
+
+export function sendCoupon(data) {
+    const location = getEventId(true);
+
+    if( location ) {
+        // eslint-disable-next-line no-unused-vars
+        const [_, city] = location;
+        let address = `https://${city.split('=')[1]}.bilego.ru/wp-json/bilego/v1/coupon`;
+
+        const options = {
+            method: 'post',
+            headers,
+            body: JSON.stringify(data)
+        };
+
+        return fetch(address, options)
+          .then( resp => resp.json() )
+          .then( resp => resp )
+          .catch( alert => alert )
+    } else {
+        throw new Error('no location');
     }
 }

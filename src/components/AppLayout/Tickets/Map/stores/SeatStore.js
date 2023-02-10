@@ -9,7 +9,7 @@ export class SeatStore {
             if( id === e.uid ) {
                 this.ticket = e;
             }else if( name === e.uid ) {
-                this.ticket = new Array();
+                this.ticket = [];
                 this.ticket.push(e);
             }
         });
