@@ -51,7 +51,7 @@ const Link = styled('a')`
 const Left = styled('div')`${p=>p.isSmallScreen && `margin-left: 15px;`}`;
 const Right = styled('div')`${p => p.isSmallScreen && `margin-right: 15px;`}`;
 const Promo = styled(Input.Search)`
-    width: 40%;
+    width: 60%;
     margin-bottom: 0.5rem;
     & .ant-btn-primary {
         background-color: ${$css.colors.red};
@@ -138,12 +138,12 @@ class Footer extends React.Component{
                     <Promo
                       readOnly={!!couponStatus}
                       loading={isLoading}
-                      placeholder="Промо код"
+                      placeholder="Промокод"
                       onSearch={this.promoHandler}
                       onPressEnter={this.promoHandler}
                       value={couponValue}
                       onChange={(e) => setCouponValue(e.target?.value)}
-                      enterButton={!!couponStatus ? <Icon type="close-circle" /> : <Icon type="tag" />}
+                      enterButton={!!couponStatus ? 'Отменить' : 'Применить'}
                     />
                     <TotalOrder>{coupon ? moneyFormating(coupon?.total, true) : total}</TotalOrder>
                     <Meta>Нажимая кнопку «перейти к оплате», <Link href={href} target="_blank">вы соглашаетесь с условиями оферты</Link></Meta>
