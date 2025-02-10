@@ -8,7 +8,8 @@ const Informer = message => {
         description: message.text,
         icon: <Icon type="frown" style={{ color: $css.colors.white }} />,
         className: 'bt-informer',
-        duration: 9
+        duration: 9,
+        placement: 'topLeft'
     })
 };
 

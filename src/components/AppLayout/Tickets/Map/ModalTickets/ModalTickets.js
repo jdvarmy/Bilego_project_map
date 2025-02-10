@@ -81,7 +81,7 @@ class ModalTickets extends React.Component{
                 onOk={closeModalTickets}
                 onCancel={closeModalTickets}
                 footer={null}
-                width={325}
+                width={345}
                 title={(Array.isArray(setOfTicket) && setOfTicket.length > 0) && (setOfTicket.length===1 ? setOfTicket[0].name : 'Входные билеты')}
                 icon={<Icon type="plus" />}
                 iconType='close-circle'
