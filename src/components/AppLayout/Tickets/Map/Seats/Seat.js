@@ -53,9 +53,9 @@ class Seat extends React.Component {
             el = this.el;
 
         if( this.el && ticket && !Array.isArray(ticket) && !specialType) {
-            const { price_regular, sector_name, row_name, seat_name } = ticket;
+            const { price, price_regular, sector_name, row_name, seat_name } = ticket;
 
-            this.tooltip = new TooltipSeat({price_regular, sector_name, row_name, seat_name, el});
+            this.tooltip = new TooltipSeat({price, price_regular, sector_name, row_name, seat_name, el});
         }else if(ticket && Array.isArray(ticket) && specialType){
             const text = 'Входные билеты';
             this.tooltip = new TooltipPath({el, ticketArr: ticket, text});

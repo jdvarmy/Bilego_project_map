@@ -32,10 +32,10 @@ export class TooltipPath extends Tooltip{
         // eslint-disable-next-line array-callback-return
         ticketArr.map(e=>{
             count += e.stock;
-            if( priceMin === undefined ) priceMin = e.price_regular;
-            if( priceMax === undefined ) priceMax = e.price_regular;
-            if( priceMin > e.price_regular ) priceMin = e.price_regular;
-            if( priceMax < e.price_regular ) priceMax = e.price_regular;
+            if( priceMin === undefined ) priceMin = e.price;
+            if( priceMax === undefined ) priceMax = e.price;
+            if( priceMin > e.price ) priceMin = e.price;
+            if( priceMax < e.price ) priceMax = e.price;
         });
 
         wrap.classList.add('bt-tooltip-wrap-sector');

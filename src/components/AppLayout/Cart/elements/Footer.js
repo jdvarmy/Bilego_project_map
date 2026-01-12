@@ -31,6 +31,13 @@ const TotalOrder = styled('div')`
     line-height: 21px;
     font-weight: 700;
 `;
+const ExtraOrder = styled('div')`
+    white-space: nowrap;
+    font-size: 14px;
+    line-height: 21px;
+    margin-bottom: 4px;
+    color: ${$css.colors.darkGrey};
+`;
 const Meta = styled('div')`
     color: ${$css.colors.darkGrey};
     clear: both;
@@ -129,8 +136,9 @@ class Footer extends React.Component{
     }
 
     render(){
-        const { cartStore:{ city, total }, dataStore: { isSmallScreen }, serverDataStore: { coupon, isLoading, couponStatus, setCouponValue, couponValue } } = this.props,
-            href = `https://bilego.ru/${city}/offer/`;
+        const { cartStore:{ city, extra, total }, dataStore: { isSmallScreen }, serverDataStore: { coupon, isLoading, couponStatus, setCouponValue, couponValue } } = this.props,
+            hrefOffer = `https://bilego.ru/${city}/offer/`,
+            hrefPerson = `https://bilego.ru/spb/item/politika-obrabotki-personalnyh-dannyh`;
 
         return(
             <Wrapper>
@@ -146,8 +154,9 @@ class Footer extends React.Component{
                       onChange={(e) => setCouponValue(e.target?.value)}
                       enterButton={!!couponStatus ? 'Отменить' : 'Применить'}
                     />
+                    {!coupon && extra && <ExtraOrder>Сервисный сбор: {extra}</ExtraOrder>}
                     <TotalOrder>{coupon ? moneyFormating(coupon?.total, true) : total}</TotalOrder>
-                    <Meta>Нажимая кнопку «перейти к оплате», <Link href={href} target="_blank">вы соглашаетесь с условиями оферты</Link></Meta>
+                    <Meta>Нажимая кнопку «перейти к оплате», <Link href={hrefOffer} target="_blank">вы соглашаетесь с условиями оферты</Link> и <Link href={hrefPerson} target="_blank">политикой обработки персональных данных</Link></Meta>
                 </TotalOrderWrap>
                 <Right isSmallScreen={isSmallScreen}>
                     <Button disabled={isLoading} type="primary" onClick={this.pay}>Перейти к оплате</Button>

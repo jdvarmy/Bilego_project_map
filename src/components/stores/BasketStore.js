@@ -25,8 +25,8 @@ class BasketStore{
     toBasket = (ticket, action, store) => {
         if( !ticket ) return false;
         if( !ticket.id ) return false;
-        const {id, price_regular, row_name, seat_name, sector_name, name, type} = ticket;
-        let oldTicket, newTicket = {id: id, name: name, price: price_regular, row: row_name, seat: seat_name, sector: sector_name, count: 1, type: type};
+        const {id, price, price_extra, price_regular, row_name, seat_name, sector_name, name, type} = ticket;
+        let oldTicket, newTicket = {id, name, price, price_extra, price_regular, row: row_name, seat: seat_name, sector: sector_name, count: 1, type};
 
         if( action && this.isFull ) return false;
         if( action && this.ticketsMap.get(id) && ticket.stock < this.ticketsMap.get(id).count+1 ) return false;
@@ -53,7 +53,7 @@ class BasketStore{
         }
         /*tickets*/
         if(action){
-            this.tickets.push({id: id, name: name, price: price_regular, row: row_name, seat: seat_name, sector: sector_name, type: type});
+            this.tickets.push({id: id, name: name, price, price_extra, price_regular, row: row_name, seat: seat_name, sector: sector_name, type: type});
 
             if(store) this.seatStores[ticket.id] = store;
         }else{

@@ -6,12 +6,20 @@ import { StyledButton, $css } from '../../styles/defaults';
 import { getStrEnding } from '../functions/functions';
 import Product from './Product';
 
+const SummaryBox = styled('div')`
+    display: flex;
+    align-items: center;
+    padding-left: 24px;
+    gap: 4px;
+    font-size: 12px;
+    ${p=>!p.mobile && `background-color: ${$css.colors.white};font-size: 14px;`}
+    white-space: nowrap;
+    word-spacing: -2px;
+`;
 const Summary = styled('div')`
     font-size: 20px;
     font-weight: 500;
     ${p=>!p.mobile && `background-color: ${$css.colors.white};font-size: 24px;`}
-    white-space: nowrap;
-    word-spacing: -2px;
 `;
 const TicketCount = styled(Summary)`
     text-align: center;
@@ -41,29 +49,38 @@ const TableRow = styled('div')`
 class Products extends React.Component{
     getCart = () => {
         const { basketStore:{ tickets }, cartStore:{ showHideCart }, serverDataStore:{ data:{ event } } } = this.props;
-        showHideCart(tickets, event, moneyFormating(this.countSummary(), true));
+        const [summary, extra] = this.countSummary()
+
+        showHideCart(tickets, event, !!extra ? moneyFormating(extra, true) : undefined, moneyFormating(summary + (extra ?? 0), true));
     };
     countSummary = () => {
         let summary = 0;
+        let extra = 0;
         const { basketStore:{ tickets } } = this.props;
+
         tickets.forEach( el => {
-            summary += el.price*1;
+            summary += +el.price;
+            extra += +el.price_extra;
         } );
-        return summary;
+        return [summary, extra];
     };
     render(){
         const { basketStore:{ tickets, count }, dataStore:{ isSmallScreen } } = this.props;
         const maxWidth = 140 * count;
+        const [summary, extra] = this.countSummary()
 
         return(
             <Fragment>
                 <StyledButton type="primary" onClick={this.getCart}>Купить билеты</StyledButton>
-                <Summary mobile={isSmallScreen}>{moneyFormating(this.countSummary(), true)}</Summary>
+                <SummaryBox>
+                    <Summary mobile={isSmallScreen}>{moneyFormating(summary, true)}</Summary>
+                    {!!extra && <div>+{moneyFormating(extra, false)}</div>}
+                </SummaryBox>
                 <Content mobile={isSmallScreen}>
                     { isSmallScreen
                       ? <TicketCount mobile={isSmallScreen}>
                           {tickets.length} {getStrEnding(tickets.length, ['билет','билета','билетов'])}
-                          {tickets.map((t, k) => <p key={k} style={{ fontSize: '9px', margin: 0 }}>{t.name}</p>)}
+                          {/*{tickets.map((t, k) => <p key={k} style={{ fontSize: '9px', margin: 0 }}>{t.name}</p>)}*/}
                         </TicketCount>
                       : <ContentWidth maxWidth={maxWidth}>
                             <Table maxWidth={maxWidth}>

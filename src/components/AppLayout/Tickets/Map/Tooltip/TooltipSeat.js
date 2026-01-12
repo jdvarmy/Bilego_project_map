@@ -8,7 +8,7 @@ export class TooltipSeat extends Tooltip{
     }
 
     create = errorY => {
-        const { price_regular, sector_name, row_name, seat_name, el } = this.props;
+        const { price, price_regular, sector_name, row_name, seat_name, el } = this.props;
 
         this.el = el;
         let title;
@@ -28,7 +28,7 @@ export class TooltipSeat extends Tooltip{
         cont.classList.add('content');
         desc.classList.add('descr');
 
-        title = `${price_regular} ₽`;
+        title = `${price} ₽`;
         const c = `${sector_name}`;
         const d = `ряд ${row_name} место ${seat_name}`;
 

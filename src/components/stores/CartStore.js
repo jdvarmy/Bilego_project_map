@@ -5,6 +5,7 @@ class CartStore{
     @observable showPay = false;
     @observable tickets = undefined;
     @observable event = undefined;
+    @observable extra = undefined;
     @observable total = undefined;
     city = null;
 
@@ -27,14 +28,15 @@ class CartStore{
         this.showPay = !this.showPay;
     };
     @action
-    showHideCart = (tickets, event, total) => {
+    showHideCart = (tickets, event, extra, total) => {
         this.showCart = !this.showCart;
-        this.setData(tickets, event, total);
+        this.setData(tickets, event, extra, total);
     };
 
-    setData = (tickets, event, total) => {
+    setData = (tickets, event, extra, total) => {
         this.tickets = tickets;
         this.event = event;
+        this.extra = extra;
         this.total = total;
     };
 
@@ -44,6 +46,7 @@ class CartStore{
         this.showPay = false;
         this.tickets = undefined;
         this.event = undefined;
+        this.extra = undefined;
         this.total = undefined;
     };
 

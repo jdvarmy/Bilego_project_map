@@ -55,7 +55,17 @@ const RowSeat = styled(ContentWrapper)`
     font-size: 14px;
 `;
 const Money = styled(ContentWrapper)`
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
     & > span{
+        white-space: nowrap;
+        word-spacing: -2px;
+        padding-right: 1px;
+    }
+    & > div{
+        font-size: 12px;
         white-space: nowrap;
         word-spacing: -2px;
         padding-right: 1px;
@@ -101,7 +111,7 @@ class Product extends React.Component{
     };
 
     render() {
-        const { ticket: {price, sector, row, seat, name, type}, basketStore: {count}, number, dataStore: {isSmallScreen} } = this.props,
+        const { ticket: {price, price_extra, sector, row, seat, name, type}, basketStore: {count}, number, dataStore: {isSmallScreen} } = this.props,
             seatInfo = ( row && seat && (<RowSeat>ряд {row}, место {seat}</RowSeat>) ) || ( type === 'without_map' && <Sector>{name}</Sector> ),
             width = 100 / count,
             shift = number === 1 ? 12 : 12 * number - count * number * 12 / 2;
@@ -113,6 +123,7 @@ class Product extends React.Component{
                     <ContentWrapper>
                         <Money>
                             <span>{moneyFormating(price, true)}</span>
+                            {!!price_extra && <div>(+{moneyFormating(price_extra, false)})</div>}
                         </Money>
                     </ContentWrapper>
                     <Remover

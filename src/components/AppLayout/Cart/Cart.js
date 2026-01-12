@@ -61,8 +61,8 @@ const CountTickets = styled(Div)`
 `;
 const TicketsWrap = styled('div')`
     ${props => props.isSmallScreen ? 
-        `height: 249px;` :
-        `height: 219px;`
+        `height: 206px;` :
+        `height: 182px;`
     }
     position: relative;
 `;

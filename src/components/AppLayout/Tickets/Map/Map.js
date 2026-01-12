@@ -59,11 +59,11 @@ class Map extends React.PureComponent{
                     <Fragment>
                         <Menu/>
                         <Wrapper id="bt--tickets-views">
-                        <Container id="bt-container" data-type="map">
-                        <Svg />
-                        <MiniMap />
-                        <ZoomButtons/>
-                        </Container>
+                          <Container id="bt-container" data-type="map">
+                            <Svg />
+                            <MiniMap />
+                            <ZoomButtons/>
+                          </Container>
                         </Wrapper>
                         <ModalTickets />
                     </Fragment>

@@ -19,7 +19,7 @@ class Tickets extends React.Component{
             <Wrapper>
                 {tickets && tickets.map( (ticket) => {
                     const couponTicket = (Array.isArray(coupon?.tickets) && coupon.tickets.find(t => t.id === ticket.id));
-                    const realTicket =  couponTicket ? { ...ticket, price: couponTicket.total } : ticket;
+                    const realTicket =  couponTicket ? { ...ticket, price: couponTicket.total / couponTicket.count } : ticket;
 
                     return <Ticket ticket={realTicket} key={realTicket.id} />
                 } )}
